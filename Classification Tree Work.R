@@ -30,7 +30,8 @@ tree_pred = predict(tree_carseats, Carseats_test, type = "class")
 print(glue("Tree Accuracy: {sum(diag(confMat)) / sum(confMat)}"))
 # Random Forest  ----
 
-rf_carseats = randomForest(High ~ . -Sales, Carseats, subset = train)
+rf_carseats = randomForest(High ~ . -Sales, Carseats, subset = train,
+                           ntree = 50000, mtry = 6)
 rfPred = predict(rf_carseats, Carseats_test)
 (rfConfMat = table(rfPred, High_test))
 print(glue("rf accuracy: {sum(diag(rfConfMat)) / sum(rfConfMat)}"))
@@ -38,3 +39,5 @@ print(glue("rf accuracy: {sum(diag(rfConfMat)) / sum(rfConfMat)}"))
 #Variable Importance
 importance(rf_carseats)
 varImpPlot(rf_carseats, pch = 20)
+
+
